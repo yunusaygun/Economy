@@ -1,0 +1,125 @@
+#include <iostream>     // cout,cin için kullanildi
+#include <math.h>       //pow formülü için kullanildi.
+#include <iomanip>      //setw için kullanildi.
+#include <conio.h>      // getch komutu için kullanildi.
+using namespace std;
+// Ad-Soyad : Yunus Aygün   No :g200102352
+// Muhedislik Ekonomisinde Basabas Noktasi Analizi, Net Simdiki Deger ve Ic verim orani hesabi
+
+int main()
+{
+    int i,b,m,secim;    // secim switch case icin kullanildi -- i b m for dongu icin kullanildi
+    double nbd,para[150],pvx[150],n,toplam;    //nbd = Net bugunki deger  n= donem
+    double faizorani,pv[150],ilkyatirim,nkt;    // nkt = nakit akıs toplami
+    double sabitgider[25],sabit=0,degiskengider[25],degisken=0;
+    double satis,kapasite,q,bbn;     // bbn = basabasnoktasi hasilati , q = basabasnoktasi
+    double i1,i2,nbd1,nbd2;     //nbd = Net bugunki deger,  i1 i2 faiz orani
+    float interpolasyon;
+    char secim2;      // do while dongusu icin kullanildi
+    cout << "AD Soyad : Yunus Aygun\n"
+         << "No : g200102352\n"
+         << "Muhedislik Ekonomisinde Basabas Noktasi Analizi, Net Simdiki Deger ve Ic verim orani hesabi\n\n" ;
+    do
+    {
+    cout << "1- Net Bugunku Deger analizi \n"
+        << "2- Basabas Noktasi Analizi \n"
+        << "3- Ic Verim Orani\n"
+        << "4- Amortisman" ;
+        cout << "\n Yapmak istediginiz islemi giriniz (1,2,3,4) :\t";
+    cin >> secim ;
+    switch(secim){
+        case 1 :
+        nbd = 0.0;
+        nkt = 0.0;
+        cout << "Faiz Oranini Giriniz ";
+        cin >> faizorani;
+        cout << "Donem Sayisi ";
+        cin >> n;
+        cout << "Baslangic yatirimini giriniz ";
+        cin >> ilkyatirim;
+        cout << "Gelir/Gider giriniz (Giderleri Negatif girmeyi unutmayiniz!) " << endl;
+        for(i=1;i <= n;i++)
+        {
+            cout << "Yil  " << i << setw(3) << ":";
+            cin >> para[i];
+            // nbd = fv(i+i)^n  -- fv = Gelecekte elde edeçeðimiz deðer , i faiz orani, n dönem
+            pv[i] = (pow((1+(faizorani/100)),i));
+            pvx[i] = para[i] / pv[i];
+            nbd = nbd + pvx[i];
+            toplam = toplam + para[i];
+        }
+        nkt = toplam - ilkyatirim;
+        nbd = nbd - ilkyatirim;
+        cout << "\nNBD=" << nbd << endl;
+        cout << "Nakit Akis Toplami= " << nkt << endl;
+        break ;
+        case 2 :
+               cout << "Kac adet sabit gideriniz mevcut ?\t";
+    cin >> b;
+    for(i=1;i<=b;i++)
+    {
+        cout<< i << ". Sabit giderinizi giriniz :\t";
+        cin >> sabitgider[i];
+        sabit = sabit + sabitgider[i];
+    }
+    cout <<"Kac Adet Degisken Gideriniz mevcut ? \t ";
+    cin >> m;
+    for(i=1;i<=m;i++)
+    {
+        cout<< i << ". Degisken giderinizi girinz :\t";
+        cin >> degiskengider[i];
+        degisken = degisken + degiskengider[i];
+    }
+    cout << "Satis fiyatini giriniz \t";
+    cin >> satis;
+    cout << "Kapasiteyi giriniz \t ";
+    cin >> kapasite;
+    q = sabit/(satis-degisken);
+    bbn = sabit/(1-(degisken/satis));
+    for(i=1;i<=b;i++)
+    {
+        cout << i << ". Sabit gider :\t" << sabitgider[i] << endl;
+    }
+    for(i=1;i<=m;i++)
+    {
+        cout << i << ". Degisken gider :\t " << degiskengider[i] << endl;
+    }
+        cout << "Kara gecis(Basabas Noktasi) : \t " << q << endl;
+        cout << "Basa bas noktasi satis hasilati :\t " << bbn ;
+        break;
+        case 3 :
+        cout << "\n\t\tIC VERIM ORANI HESAPLAMA v1\n\n";
+        cout<<"Net Bugunki Degeri giriniz\t";
+        cin >> nbd1;
+        cout <<"Faiz Oranini girinz\t";
+        cin >>i1;
+        cout<<"Net Bugunki Degeri giriniz\t";
+        cin >> nbd2;
+        cout <<"Faiz Oranini girinz\t";
+        cin >>i2;
+        interpolasyon=i1/100+(nbd1/(nbd1-nbd2)*(i2/100-i1/100));
+        cout << "Ic Verim Oraniniz : \t" << interpolasyon*100<<"%";
+            break;
+        case 4 :
+            double p,hurda,amortisman;  // p = Maliyet
+            int N;
+            cout << "Duran Varligin Maliyeti :\t";
+            cin >> p;
+            cout <<"Duran varligin ekonomik omru :\t";
+            cin >> N;
+            cout << "Duran varligin hurda degeri :\t";
+            cin >> hurda;
+            amortisman = (p-hurda)/N;
+            cout << "Amortisman :\t" <<amortisman << endl;
+            break;
+        default :
+            cout << "\nHatali giris yaptinizi 1,2,3,4 ile tuslayiniz \n"
+                << "********************************************" ;
+        }
+        cout <<"\nTekrar giris (E/H) \t" ;
+        cin >> secim2;
+        }while(secim2 == 'e' || secim2 == 'E');
+        cout << "\n\n*************************************************************************";
+        getch();
+        return 0;
+    }
