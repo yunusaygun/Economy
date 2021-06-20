@@ -3,7 +3,7 @@
 #include <iomanip>      //setw için kullanildi.
 #include <conio.h>      // getch komutu için kullanildi.
 using namespace std;
-// Ad-Soyad : Yunus Aygün   No :g200102352
+// Ad-Soyad : Yunus Aygün   
 // Muhedislik Ekonomisinde Basabas Noktasi Analizi, Net Simdiki Deger ve Ic verim orani hesabi
 
 int main()
